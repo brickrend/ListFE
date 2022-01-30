@@ -5,15 +5,11 @@ import { useState } from "react";
 import AddList from "./AddList";
 
 const TaskList = () => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  function openModal() {
-    setIsOpen(true);
-    console.log(modalIsOpen);
-  }
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
   const tasks = taskStore.tasks.map((task) => {
     return <TaskItem task={task} />;
   });
@@ -22,7 +18,7 @@ const TaskList = () => {
     <div>
       {tasks}
       <button onClick={openModal}>Add</button>
-      <AddList isOpen={modalIsOpen} onRequestClose={closeModal} />
+      <AddList isOpen={isOpen} closeModal={closeModal} />
     </div>
   );
 };

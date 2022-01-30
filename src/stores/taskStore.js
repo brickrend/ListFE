@@ -19,6 +19,16 @@ class TaskStore {
       console.error(error);
     }
   };
+
+  addTask = async (newTask) => {
+    try {
+      const new_Task = newTask;
+      const response = await instance.post("/addTask", new_Task);
+      this.tasks.push(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 }
 
 const taskStore = new TaskStore();

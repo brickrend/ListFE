@@ -1,6 +1,8 @@
 import React from "react";
 import Modal from "react-modal";
 import { observer } from "mobx-react";
+import { useState } from "react";
+import taskStore from "../../stores/taskStore";
 
 const customStyles = {
   content: {
@@ -14,23 +16,24 @@ const customStyles = {
 };
 
 const AddList = (props) => {
+  const [newTask, setNewTask] = useState({ taskname: "", date: "" });
+  const handleChange = (e) => {
+    setNewTask({ ...newTask, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    taskStore.addTask(newTask);
+    props.closeModal();
+  };
   return (
     <div>
       <Modal
-        isOpen={props.modalIsOpen}
-        onRequestClose={props.closeModal}
+        isOpen={props.isOpen}
+        closeModal={props.closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
       >
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-          <button onClick={props.onRequestClose}></button>
-        </form>
+        <div>Enter New Take</div>
+        <input name="taskname" onChange={handleChange}></input>
+        <button onClick={handleSubmit}>Submit</button>
       </Modal>
     </div>
   );
